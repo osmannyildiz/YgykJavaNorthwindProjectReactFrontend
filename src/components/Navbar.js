@@ -1,14 +1,34 @@
-import React from "react";
-import CartSummary from "./CartSummary";
-import { Button, Container, Menu } from "semantic-ui-react";
+import React, { useState } from "react";
+import { Container, Menu } from "semantic-ui-react";
+import SignedOutActions from "./SignedOutActions";
+import SignedInActions from "./SignedInActions";
+import { NavLink } from "react-router-dom";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
 export default function Navbar() {
+	const [isSignedIn, setIsSignedIn] = useState(false);
+	const history = useHistory();
+
+	function handleSignIn() {
+		setIsSignedIn(true);
+	}
+
+	function handleSignOut() {
+		setIsSignedIn(false);
+		history.replace("/");
+	}
+
 	return (
-		<Menu inverted fixed="top">
+		<Menu inverted fixed="top" style={{ minHeight: "54px" }}>
 			<Container>
+				<Menu.Item header>Reaktif Market</Menu.Item>
 				<Menu.Item
 					link
 					name="home"
+					content="Ana Sayfa"
+					as={NavLink}
+					to="/"
+					exact
 					/*active={activeItem === "home"}
 					onClick={this.handleItemClick}*/
 				/>
@@ -19,13 +39,11 @@ export default function Navbar() {
 					onClick={this.handleItemClick}*/
 				/>
 
-				<Menu.Menu position="right">
-					<CartSummary />
-
-					<Menu.Item>
-						<Button primary>Sign Up</Button>
-					</Menu.Item>
-				</Menu.Menu>
+				{isSignedIn ? (
+					<SignedInActions handleSignOut={handleSignOut} />
+				) : (
+					<SignedOutActions handleSignIn={handleSignIn} />
+				)}
 			</Container>
 		</Menu>
 	);
