@@ -6,7 +6,7 @@ import ProductService from "../services/productService";
 export default function ProductDetail() {
 	const params = useParams();
 
-	const [product, setProduct] = useState({});
+	const [product, setProduct] = useState(null);
 
 	useEffect(() => {
 		let productService = new ProductService();
@@ -17,16 +17,18 @@ export default function ProductDetail() {
 
 	return (
 		<Card fluid>
-			<Card.Content>
-				<Card.Header>{product.name}</Card.Header>
-				<Card.Meta>{product.category.name}</Card.Meta>
-				<Card.Description>
-					<p>
-						₺{product.unitPrice.toFixed(2)} = {product.quantityPerUnit}
-					</p>
-					<p>Stokta {product.unitsInStock} adet birim mevcut</p>
-				</Card.Description>
-			</Card.Content>
+			{product && (
+				<Card.Content>
+					<Card.Header>{product.name}</Card.Header>
+					<Card.Meta>{product.category.name}</Card.Meta>
+					<Card.Description>
+						<p>
+							₺{product.unitPrice.toFixed(2)} = {product.quantityPerUnit}
+						</p>
+						<p>Stokta {product.unitsInStock} adet birim mevcut</p>
+					</Card.Description>
+				</Card.Content>
+			)}
 			<Card.Content extra>
 				<div className="ui two buttons">
 					<Button basic color="green">

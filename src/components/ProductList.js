@@ -1,15 +1,24 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-import { Icon, Menu, Table } from "semantic-ui-react";
+import { toast } from "react-toastify";
+import { Button, Icon, Menu, Table } from "semantic-ui-react";
 import ProductService from "../services/productService";
+import { addToCart } from "../store/actions/cartActions";
 
 export default function ProductList() {
+	const dispatch = useDispatch();
 	const [products, setProducts] = useState([]);
 
 	useEffect(() => {
 		let productService = new ProductService();
 		productService.getAll().then((resp) => setProducts(resp.data.data));
 	}, []);
+
+	function handleAddToCart(product) {
+		dispatch(addToCart(product));
+		toast.success(`${product.name} sepete eklendi!`);
+	}
 
 	return (
 		<Table celled>
@@ -21,6 +30,7 @@ export default function ProductList() {
 					<Table.HeaderCell>Birim Fiyatı</Table.HeaderCell>
 					<Table.HeaderCell>Kategori İsmi</Table.HeaderCell>
 					<Table.HeaderCell>Stok Adedi</Table.HeaderCell>
+					<Table.HeaderCell>İşlemler</Table.HeaderCell>
 				</Table.Row>
 			</Table.Header>
 
@@ -35,6 +45,15 @@ export default function ProductList() {
 						<Table.Cell>₺{product.unitPrice.toFixed(2)}</Table.Cell>
 						<Table.Cell>{product.category.name}</Table.Cell>
 						<Table.Cell>{product.unitsInStock}</Table.Cell>
+						<Table.Cell>
+							<Button
+								primary
+								size="tiny"
+								onClick={() => handleAddToCart(product)}
+							>
+								Sepete ekle
+							</Button>
+						</Table.Cell>
 					</Table.Row>
 				))}
 			</Table.Body>
