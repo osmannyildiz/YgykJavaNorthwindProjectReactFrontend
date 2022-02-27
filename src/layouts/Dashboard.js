@@ -1,12 +1,13 @@
 import React from "react";
-import "./Dashboard.css";
+import { Route, Switch } from "react-router-dom";
+import { Container, Grid } from "semantic-ui-react";
 import CategoriesAside from "../components/CategoriesAside";
 import Navbar from "../components/Navbar";
-import ProductList from "../components/ProductList";
-import { Container, Grid } from "semantic-ui-react";
-import { Route } from "react-router-dom";
-import ProductDetail from "../components/ProductDetail";
-import CartDetail from "../components/CartDetail";
+import CartDetail from "../pages/CartDetail";
+import ProductAdd from "../pages/ProductAdd";
+import ProductDetail from "../pages/ProductDetail";
+import ProductList from "../pages/ProductList";
+import "./Dashboard.css";
 
 export default function Dashboard() {
 	return (
@@ -21,7 +22,10 @@ export default function Dashboard() {
 						<Grid.Column width={12}>
 							<Route exact path="/" component={ProductList} />
 							<Route exact path="/products" component={ProductList} />
-							<Route path="/products/:id" component={ProductDetail} />
+							<Switch>
+								<Route path="/products/add" component={ProductAdd} />
+								<Route path="/products/:id" component={ProductDetail} />
+							</Switch>
 							<Route path="/cart" component={CartDetail} />
 						</Grid.Column>
 					</Grid.Row>

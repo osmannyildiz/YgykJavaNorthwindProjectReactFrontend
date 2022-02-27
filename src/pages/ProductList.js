@@ -11,7 +11,7 @@ export default function ProductList() {
 	const [products, setProducts] = useState([]);
 
 	useEffect(() => {
-		let productService = new ProductService();
+		const productService = new ProductService();
 		productService.getAll().then((resp) => setProducts(resp.data.data));
 	}, []);
 
@@ -60,7 +60,7 @@ export default function ProductList() {
 
 			<Table.Footer>
 				<Table.Row>
-					<Table.HeaderCell colSpan="6">
+					<Table.HeaderCell colSpan="7">
 						<Menu floated="right" pagination>
 							<Menu.Item as="a" icon>
 								<Icon name="chevron left" />

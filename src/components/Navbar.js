@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import { Container, Menu } from "semantic-ui-react";
-import SignedOutActions from "./SignedOutActions";
-import SignedInActions from "./SignedInActions";
 import { NavLink } from "react-router-dom";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import { Container, Menu } from "semantic-ui-react";
+import SignedInActions from "./SignedInActions";
+import SignedOutActions from "./SignedOutActions";
 
 export default function Navbar() {
 	const [isSignedIn, setIsSignedIn] = useState(false);
@@ -34,7 +34,10 @@ export default function Navbar() {
 				/>
 				<Menu.Item
 					link
-					name="messages"
+					name="productAdd"
+					content="Ürün Ekle"
+					as={NavLink}
+					to="/products/add"
 					/*active={activeItem === "messages"}
 					onClick={this.handleItemClick}*/
 				/>
