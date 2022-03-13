@@ -11,8 +11,7 @@ export default function ProductList() {
 	const [products, setProducts] = useState([]);
 
 	useEffect(() => {
-		const productService = new ProductService();
-		productService.getAll().then((resp) => setProducts(resp.data.data));
+		ProductService.getAll().then((resp) => setProducts(resp.data.data));
 	}, []);
 
 	function handleAddToCart(product) {

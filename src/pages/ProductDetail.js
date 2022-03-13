@@ -9,11 +9,10 @@ export default function ProductDetail() {
 	const [product, setProduct] = useState(null);
 
 	useEffect(() => {
-		let productService = new ProductService();
-		productService
-			.getById(params.id)
-			.then((resp) => setProduct(resp.data.data));
-	}, []);
+		ProductService.getById(params.id).then((resp) =>
+			setProduct(resp.data.data)
+		);
+	}, [params.id]);
 
 	return (
 		<Card fluid>

@@ -9,15 +9,12 @@ import CategoryService from "../services/categoryService";
 import ProductService from "../services/productService";
 
 export default function ProductAdd() {
-	const productService = new ProductService();
-	const categoryService = new CategoryService();
-
 	const [categories, setCategories] = useState([]);
 
 	useEffect(() => {
-		categoryService
-			.getAllWithSortingByName()
-			.then((resp) => setCategories(resp.data.data));
+		CategoryService.getAllWithSortingByName().then((resp) =>
+			setCategories(resp.data.data)
+		);
 	}, []);
 
 	const initialValues = {
@@ -41,7 +38,7 @@ export default function ProductAdd() {
 			.required("Lütfen kategori seçin."),
 	});
 	function handleProductAddFormSubmit(values) {
-		productService.add(values).then((resp) => {
+		ProductService.add(values).then((resp) => {
 			if (resp.data.success) {
 				toast.success("Ürün eklendi.");
 			} else {
@@ -78,7 +75,9 @@ export default function ProductAdd() {
 								Kategori
 							</option>
 							{categories.map((category) => (
-								<option value={category.id}>{category.name}</option>
+								<option value={category.id} key={category.id}>
+									{category.name}
+								</option>
 							))}
 						</Field>
 						<ErrorMessage

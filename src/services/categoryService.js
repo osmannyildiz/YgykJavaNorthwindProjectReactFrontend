@@ -1,15 +1,15 @@
 import axios from "axios";
 
 export default class CategoryService {
-	baseUrl = "http://localhost:8080/api/categories";
+	static baseUrl = "http://localhost:8080/api/categories";
 
-	getAllWithSortingByName(descending = false) {
+	static getAllWithSortingByName(descending = false) {
 		return axios.get(this.baseUrl + "/getAllWithSortingByName", {
 			params: { descending: descending },
 		});
 	}
 
-	getById(id) {
+	static getById(id) {
 		return axios.get(this.baseUrl + "/getById", {
 			params: { id: id },
 		});

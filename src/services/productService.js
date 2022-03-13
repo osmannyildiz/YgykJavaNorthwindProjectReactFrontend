@@ -1,19 +1,19 @@
 import axios from "axios";
 
 export default class ProductService {
-	baseUrl = "http://localhost:8080/api/products";
+	static baseUrl = "http://localhost:8080/api/products";
 
-	getAll() {
+	static getAll() {
 		return axios.get(this.baseUrl + "/getAll");
 	}
 
-	getById(id) {
+	static getById(id) {
 		return axios.get(this.baseUrl + "/getById", {
 			params: { id: id },
 		});
 	}
 
-	add(productAddModel) {
+	static add(productAddModel) {
 		return axios.post(this.baseUrl + "/add", {
 			name: productAddModel.name,
 			quantityPerUnit: productAddModel.quantityPerUnit,
