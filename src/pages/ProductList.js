@@ -3,16 +3,28 @@ import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import { Button, Icon, Menu, Table } from "semantic-ui-react";
+import { useQuery } from "../hooks/useQuery";
 import ProductService from "../services/productService";
 import { addToCart } from "../store/actions/cartActions";
 
 export default function ProductList() {
+	const { categoryId } = useQuery();
+
 	const dispatch = useDispatch();
+	const [allProducts, setAllProducts] = useState([]);
 	const [products, setProducts] = useState([]);
 
 	useEffect(() => {
-		ProductService.getAll().then((resp) => setProducts(resp.data.data));
+		ProductService.getAll().then((resp) => setAllProducts(resp.data.data));
 	}, []);
+
+	useEffect(() => {
+		if (categoryId) {
+			setProducts(allProducts.filter((p) => p.category.id === +categoryId));
+		} else {
+			setProducts(allProducts);
+		}
+	}, [categoryId, allProducts]);
 
 	function handleAddToCart(product) {
 		dispatch(addToCart(product));
@@ -29,7 +41,9 @@ export default function ProductList() {
 					<Table.HeaderCell>Birim Fiyatı</Table.HeaderCell>
 					<Table.HeaderCell>Kategori İsmi</Table.HeaderCell>
 					<Table.HeaderCell>Stok Adedi</Table.HeaderCell>
-					<Table.HeaderCell>İşlemler</Table.HeaderCell>
+					<Table.HeaderCell style={{ minWidth: "125px" }}>
+						İşlemler
+					</Table.HeaderCell>
 				</Table.Row>
 			</Table.Header>
 
