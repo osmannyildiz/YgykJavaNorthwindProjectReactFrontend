@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import { Menu } from "semantic-ui-react";
 import { useQuery } from "../hooks/useQuery";
 import CategoryService from "../services/categoryService";
+import CategoriesAsideItem from "./CategoriesAsideItem";
 
 export default function CategoriesAside() {
 	const { categoryId } = useQuery();
@@ -28,20 +28,18 @@ export default function CategoriesAside() {
 		<div>
 			<h2>Kategoriler</h2>
 			<Menu vertical fluid>
-				<Link to={`/products`}>
-					<Menu.Item name="_all" active={!activeCategory}>
-						Hepsi
-					</Menu.Item>
-				</Link>
+				<CategoriesAsideItem
+					name="Hepsi"
+					to="/products"
+					active={!activeCategory}
+				/>
 				{categories.map((category) => (
-					<Link key={category.id} to={`/products?categoryId=${category.id}`}>
-						<Menu.Item
-							name={category.name}
-							active={activeCategory && +activeCategory.id === category.id}
-						>
-							{category.name}
-						</Menu.Item>
-					</Link>
+					<CategoriesAsideItem
+						key={category.id}
+						name={category.name}
+						to={`/products?categoryId=${category.id}`}
+						active={activeCategory && +activeCategory.id === category.id}
+					/>
 				))}
 			</Menu>
 		</div>
