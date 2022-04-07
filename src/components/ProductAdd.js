@@ -3,10 +3,10 @@ import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { Button, FormField, Label } from "semantic-ui-react";
 import * as Yup from "yup";
-import MyInputUsingHook from "../components/MyInputUsingHook";
-import MyTextInput from "../components/MyTextInput";
 import CategoryService from "../services/categoryService";
 import ProductService from "../services/productService";
+import MyInputUsingHook from "./MyInputUsingHook";
+import MyTextInput from "./MyTextInput";
 
 export default function ProductAdd() {
 	const [categories, setCategories] = useState([]);

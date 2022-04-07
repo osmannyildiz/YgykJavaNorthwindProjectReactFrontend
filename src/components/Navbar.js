@@ -1,22 +1,12 @@
-import React, { useState } from "react";
+import React, { useContext } from "react";
 import { NavLink } from "react-router-dom";
-import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { Container, Menu } from "semantic-ui-react";
+import AuthContext from "../contexts/authContext";
 import SignedInActions from "./SignedInActions";
 import SignedOutActions from "./SignedOutActions";
 
 export default function Navbar() {
-	const [isSignedIn, setIsSignedIn] = useState(false);
-	const history = useHistory();
-
-	function handleSignIn() {
-		setIsSignedIn(true);
-	}
-
-	function handleSignOut() {
-		setIsSignedIn(false);
-		history.replace("/");
-	}
+	const authContext = useContext(AuthContext);
 
 	return (
 		<Menu inverted fixed="top" style={{ minHeight: "54px" }}>
@@ -29,8 +19,6 @@ export default function Navbar() {
 					as={NavLink}
 					to="/"
 					exact
-					/*active={activeItem === "home"}
-					onClick={this.handleItemClick}*/
 				/>
 				<Menu.Item
 					link
@@ -38,14 +26,12 @@ export default function Navbar() {
 					content="Ürün Ekle"
 					as={NavLink}
 					to="/products/add"
-					/*active={activeItem === "messages"}
-					onClick={this.handleItemClick}*/
 				/>
 
-				{isSignedIn ? (
-					<SignedInActions handleSignOut={handleSignOut} />
+				{authContext.isSignedIn ? (
+					<SignedInActions handleSignOut={authContext.handleSignOut} />
 				) : (
-					<SignedOutActions handleSignIn={handleSignIn} />
+					<SignedOutActions handleSignIn={authContext.handleSignIn} />
 				)}
 			</Container>
 		</Menu>
